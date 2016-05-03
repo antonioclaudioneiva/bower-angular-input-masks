@@ -5102,6 +5102,18 @@ function NumberMaskDirective($locale, $parse, PreFormatters, NumberMasks) {
 					return null;
 				}
 
+				if (angular.isDefined(attrs.uiNegativeNumber)) {
+					if (value == '-') {
+						return;
+					} else {
+						if (value == '--') {
+							ctrl.$setViewValue('');
+							ctrl.$render();
+							return;
+						}
+					}
+				}
+
 				var valueToFormat = PreFormatters.clearDelimitersAndLeadingZeros(value) || '0';
 				var formatedValue = viewMask.apply(valueToFormat);
 				var actualNumber = parseFloat(modelMask.apply(valueToFormat));
